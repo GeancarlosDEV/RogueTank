@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/small_barrel_hit_05.wav-58921da31799656df1f0bae93d255a98.sample"
+
+[deps]
+
+source_file="res://sons/small_barrel_hit_05.wav"
+dest_files=[ "res://.import/small_barrel_hit_05.wav-58921da31799656df1f0bae93d255a98.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,235 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://5.1 sprites/sprites/specialBarrel1.png" type="Texture" id=1]
+[ext_resource path="res://scripts/Tank.gd" type="Script" id=2]
+[ext_resource path="res://5.1 sprites/sprites/tankBody_bigRed.png" type="Texture" id=3]
+[ext_resource path="res://5.1 sprites/sprites/shotLarge.png" type="Texture" id=4]
+[ext_resource path="res://5.1 sprites/sprites/shotOrange.png" type="Texture" id=5]
+[ext_resource path="res://5.1 sprites/sprites/shotRed.png" type="Texture" id=6]
+[ext_resource path="res://scripts/mira.gd" type="Script" id=7]
+[ext_resource path="res://5.1 sprites/sprites/specialBarrel4_outline.png" type="Texture" id=8]
+[ext_resource path="res://sons/tank_cannon.wav" type="AudioStream" id=9]
+[ext_resource path="res://sons/disparo_hmg_tank.wav" type="AudioStream" id=10]
+[ext_resource path="res://sons/reload.wav" type="AudioStream" id=11]
+[ext_resource path="res://sons/tank_motor.wav" type="AudioStream" id=12]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ ExtResource( 4 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 38, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "fire"
+length = 0.4
+step = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( -0.00305025, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( -0.00305025, 0, 0.1, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( -37, 0 ), Vector2( 26, 0.000534058 ), Vector2( 26, 0.001 ), Vector2( 26, 0.001 ), Vector2( 32, 0.000656128 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "shoot"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.37 ),
+"transitions": PoolRealArray( 0.15932, 1 ),
+"update": 0,
+"values": [ Vector2( -15, 0 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="GDScript" id=5]
+resource_name = "tank_samples"
+script/source = "extends Node
+
+
+func _ready():
+	$\"../\".connect(\"cannon_shooted\" , self , \"on_tank_cannon_shooted\")
+	$\"../\".connect(\"hmg_shooted\", self , \"on_tank_hmg_shooted\")
+	$motor.play()
+
+func on_tank_cannon_shooted():
+	$cannon.play()
+	yield($cannon , \"finished\")
+	$reload.play()
+
+func on_tank_hmg_shooted():
+	$hmg.play()
+func _physics_process(delta):
+	var picth = abs($\"../\".acell / $\"../\".MAX_SPEED)
+	$motor.pitch_scale = picth + .7
+"
+
+[node name="Tank" type="KinematicBody2D"]
+rotation = 15.7079
+z_index = 20
+collision_mask = 6
+script = ExtResource( 2 )
+
+[node name="Poly" type="CollisionPolygon2D" parent="."]
+rotation = 1.5708
+polygon = PoolVector2Array( 0, -23, -14, -23, -21, -18, -21, 12, -5, 23, 6, 23, 21, 13, 21, -18, 14, -23 )
+
+[node name="sprite" type="Sprite" parent="."]
+rotation = -1.5708
+texture = ExtResource( 3 )
+
+[node name="mg" type="Sprite" parent="."]
+position = Vector2( 25.001, -15.9984 )
+rotation = -1.5708
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 8 )
+
+[node name="mg_muzzle" type="Position2D" parent="."]
+position = Vector2( 42.0009, -14.9973 )
+rotation = 1.5708
+scale = Vector2( 0.6, 0.6 )
+
+[node name="barrel" type="Node2D" parent="."]
+rotation = 3.14159
+
+[node name="sprite" type="Sprite" parent="barrel"]
+rotation = 4.71238
+texture = ExtResource( 1 )
+offset = Vector2( -0.544325, 6.65114 )
+
+[node name="muzzle" type="Position2D" parent="barrel"]
+position = Vector2( 40, 0 )
+
+[node name="fire" type="Sprite" parent="barrel"]
+position = Vector2( 38, 0 )
+rotation = -1.57079
+z_index = 10
+texture = ExtResource( 4 )
+offset = Vector2( -0.0137895, 12.2544 )
+
+[node name="anim" type="AnimationPlayer" parent="barrel"]
+root_node = NodePath("../fire")
+autoplay = "fire"
+playback_speed = 2.0
+anims/RESET = SubResource( 1 )
+anims/fire = SubResource( 2 )
+
+[node name="mira" type="Node2D" parent="barrel"]
+position = Vector2( 300, 0 )
+script = ExtResource( 7 )
+
+[node name="barrel_anim" type="AnimationPlayer" parent="barrel"]
+anims/RESET = SubResource( 3 )
+anims/shoot = SubResource( 4 )
+
+[node name="time_reload" type="Timer" parent="."]
+process_mode = 0
+one_shot = true
+
+[node name="time_mg" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.1
+
+[node name="samples" type="Node" parent="."]
+script = SubResource( 5 )
+
+[node name="cannon" type="AudioStreamPlayer" parent="samples"]
+stream = ExtResource( 9 )
+bus = "fx"
+
+[node name="hmg" type="AudioStreamPlayer" parent="samples"]
+stream = ExtResource( 10 )
+bus = "fx"
+
+[node name="reload" type="AudioStreamPlayer" parent="samples"]
+stream = ExtResource( 11 )
+bus = "fx"
+
+[node name="motor" type="AudioStreamPlayer" parent="samples"]
+stream = ExtResource( 12 )
+bus = "fx"
+
+[connection signal="timeout" from="time_reload" to="." method="_on_time_reload_timeout"]
+[connection signal="timeout" from="time_mg" to="." method="_on_time_mg_timeout"]

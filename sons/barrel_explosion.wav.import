@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/barrel_explosion.wav-b0604cf0c6d97b5799aefefb7d1e4f4c.sample"
+
+[deps]
+
+source_file="res://sons/barrel_explosion.wav"
+dest_files=[ "res://.import/barrel_explosion.wav-b0604cf0c6d97b5799aefefb7d1e4f4c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

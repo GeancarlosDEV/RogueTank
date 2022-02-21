@@ -1,0 +1,91 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://scripts/home_missel.gd" type="Script" id=1]
+[ext_resource path="res://5.1 sprites/inimigos/towerDefense_tile252.png" type="Texture" id=2]
+[ext_resource path="res://scenes/smoke.tscn" type="PackedScene" id=3]
+[ext_resource path="res://5.1 sprites/sprites/explosion5.png" type="Texture" id=4]
+[ext_resource path="res://5.1 sprites/sprites/explosion1.png" type="Texture" id=5]
+[ext_resource path="res://5.1 sprites/sprites/explosion4.png" type="Texture" id=6]
+[ext_resource path="res://5.1 sprites/sprites/explosion3.png" type="Texture" id=7]
+[ext_resource path="res://5.1 sprites/sprites/explosion2.png" type="Texture" id=8]
+[ext_resource path="res://scripts/destructive.gd" type="Script" id=9]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.140351, 0.307018, 0.622807 )
+colors = PoolColorArray( 0.99707, 0.99707, 0.99707, 1, 0.0191307, 0.0622719, 0.979492, 1, 0.950195, 0.0890808, 0.0890808, 1, 0.99707, 0.976151, 0.0233688, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0.0438931, 1 ), 0.0, 1.5069, 0, 0, Vector2( 1, 0.0337423 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+emission_shape = 1
+emission_sphere_radius = 2.0
+flag_disable_z = true
+spread = 5.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 30.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 3.0
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 7.00002
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ null, ExtResource( 5 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 4 ), null ],
+"loop": false,
+"name": "boom",
+"speed": 10.0
+} ]
+
+[node name="home_missel" type="Area2D"]
+collision_layer = 2
+script = ExtResource( 1 )
+
+[node name="smoke" parent="." instance=ExtResource( 3 )]
+position = Vector2( -28, 1 )
+amount = 25
+lifetime = 2.0
+
+[node name="fire" type="Particles2D" parent="."]
+position = Vector2( -16, 0 )
+rotation = 3.14159
+amount = 50
+lifetime = 0.6
+local_coords = false
+process_material = SubResource( 5 )
+
+[node name="sprite" type="Sprite" parent="."]
+rotation = 1.5708
+texture = ExtResource( 2 )
+
+[node name="shape" type="CollisionShape2D" parent="."]
+position = Vector2( 1, 0 )
+rotation = 1.57079
+shape = SubResource( 6 )
+
+[node name="area_damage" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 0
+script = ExtResource( 9 )
+health = 10
+
+[node name="shape" type="CollisionPolygon2D" parent="area_damage"]
+visible = false
+polygon = PoolVector2Array( -20, -7, -11, -9, -8, -6, 0, -7, 7, -7, 17, -3, 20, 0, 20, 1, 17, 4, 7, 8, 0, 8, -8, 7, -11, 10, -20, 8 )
+
+[node name="explosion" type="AnimatedSprite" parent="."]
+frames = SubResource( 7 )
+animation = "boom"
+
+[connection signal="body_entered" from="." to="." method="_on_home_missel_body_entered"]
+[connection signal="destroid" from="area_damage" to="." method="_on_area_damage_destroid"]

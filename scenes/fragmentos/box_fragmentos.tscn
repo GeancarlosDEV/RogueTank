@@ -1,0 +1,104 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://scenes/fragmentos/fragmentos.gd" type="Script" id=1]
+[ext_resource path="res://5.1 sprites/sprites/crateWood.png" type="Texture" id=2]
+[ext_resource path="res://scenes/fragmentos/box_fragmentos.gd" type="Script" id=3]
+[ext_resource path="res://5.1 sprites/sprites/explosion4.png" type="Texture" id=4]
+[ext_resource path="res://5.1 sprites/sprites/explosion5.png" type="Texture" id=5]
+[ext_resource path="res://5.1 sprites/sprites/explosion1.png" type="Texture" id=6]
+[ext_resource path="res://5.1 sprites/sprites/explosion3.png" type="Texture" id=7]
+[ext_resource path="res://5.1 sprites/sprites/explosion2.png" type="Texture" id=8]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Explosion1:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ null ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "explode"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Explosion1:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ null, ExtResource( 6 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 4 ), ExtResource( 5 ), null ]
+}
+
+[node name="box_fragmentos" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="fragmentos" type="RigidBody2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource( 1 )
+
+[node name="poly" type="Polygon2D" parent="fragmentos"]
+texture = ExtResource( 2 )
+polygon = PoolVector2Array( -14, -14, -14, -10, -14, -4, -13, -1, -10, -1, -7, 0, 0, 0, 0, -7, -1, -9, 0, -12, 0, -14 )
+uv = PoolVector2Array( 0, 0.0625, 0, 4.0625, 0, 10.0625, 1, 13.0625, 4, 13.0625, 7, 14.0625, 14, 14.0625, 14, 7.0625, 13, 5.0625, 14, 2.0625, 14, 0.0625 )
+
+[node name="poly2" type="CollisionPolygon2D" parent="fragmentos"]
+polygon = PoolVector2Array( -14, -14, -14, -10, -14, -4, -13, -1, -10, -1, -7, 0, 0, 0, 0, -7, -1, -9, 0, -12, 0, -14 )
+
+[node name="fragmentos2" type="RigidBody2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource( 1 )
+
+[node name="poly" type="Polygon2D" parent="fragmentos2"]
+texture = ExtResource( 2 )
+polygon = PoolVector2Array( 0, -14, 0, -11, -1, -9, 0, -7, 0, -1, 2, 1, 6, 1, 9, -2, 14, -2, 14, -14 )
+uv = PoolVector2Array( 13.9286, 0.166669, 13.9286, 3.16667, 12.9286, 5.16667, 13.9286, 7.16667, 13.9286, 13.1667, 15.9286, 15.1667, 19.9286, 15.1667, 22.9286, 12.1667, 27.9286, 12.1667, 27.9286, 0.166669 )
+
+[node name="poly2" type="CollisionPolygon2D" parent="fragmentos2"]
+polygon = PoolVector2Array( 0, -14, 0, -11, -1, -9, 0, -7, 0, -1, 2, 1, 6, 1, 9, -2, 14, -2, 14, -14 )
+
+[node name="fragmentos3" type="RigidBody2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource( 1 )
+
+[node name="poly" type="Polygon2D" parent="fragmentos3"]
+texture = ExtResource( 2 )
+polygon = PoolVector2Array( -14, -3, -13, -1, -10, -1, -7, 0, 0, 0, 0, 3, -3, 6, 0, 10, 0, 14, -14, 14 )
+uv = PoolVector2Array( 0.0476208, 10.8095, 1.04762, 12.8095, 4.04762, 12.8095, 7.04762, 13.8095, 14.0476, 13.8095, 14.0476, 16.8095, 11.0476, 19.8095, 14.0476, 23.8095, 14.0476, 27.8095, 0.0476208, 27.8095 )
+
+[node name="poly2" type="CollisionPolygon2D" parent="fragmentos3"]
+polygon = PoolVector2Array( -14, -3, -13, -1, -10, -1, -7, 0, 0, 0, 0, 3, -3, 6, 0, 10, 0, 14, -14, 14 )
+
+[node name="fragmentos4" type="RigidBody2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource( 1 )
+
+[node name="poly" type="Polygon2D" parent="fragmentos4"]
+texture = ExtResource( 2 )
+polygon = PoolVector2Array( 14, 14, 14, -2, 9, -2, 6, 1, 2, 1, 0, -1, 0, 3, -3, 6, 0, 10, 0, 14 )
+uv = PoolVector2Array( 28.1667, 28.0476, 28.1667, 12.0476, 23.1667, 12.0476, 20.1667, 15.0476, 16.1667, 15.0476, 14.1667, 13.0476, 14.1667, 17.0476, 11.1667, 20.0476, 14.1667, 24.0476, 14.1667, 28.0476 )
+
+[node name="poly2" type="CollisionPolygon2D" parent="fragmentos4"]
+polygon = PoolVector2Array( 14, 14, 14, -2, 9, -2, 6, 1, 2, 1, 0, -1, 0, 3, -3, 6, 0, 10, 0, 14 )
+
+[node name="Explosion1" type="Sprite" parent="."]
+position = Vector2( 0, -1 )
+
+[node name="anim" type="AnimationPlayer" parent="."]
+autoplay = "explode"
+anims/RESET = SubResource( 1 )
+anims/explode = SubResource( 2 )

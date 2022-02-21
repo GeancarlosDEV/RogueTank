@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/alerta_bomba_ativada_explodindo_toquesengracadosmp3.com.mp3-113202d6a79834068801043d03ff4461.mp3str"
+
+[deps]
+
+source_file="res://sons/alerta_bomba_ativada_explodindo_toquesengracadosmp3.com.mp3"
+dest_files=[ "res://.import/alerta_bomba_ativada_explodindo_toquesengracadosmp3.com.mp3-113202d6a79834068801043d03ff4461.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
